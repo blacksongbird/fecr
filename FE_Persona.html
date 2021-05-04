@@ -1,0 +1,257 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Persona</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+
+    <div id="espaciomostraravance"></div>
+
+    <input type="checkbox" id="menu" />
+    <label for="menu" class="menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </label>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="FE_CodigoComercial.html">Códigos Comerciales</a></li>
+            <li><a href="FE_CodigoTipoMoneda.html">Códigos de Tipo de Moneda</a></li>
+            <li><a href="FE_Descuento.html">Descuento</a></li>
+            <li><a href="FE_DetalleServicio.html">Detalles de Servicio</a></li>
+            <li><a href="FE_Exoneracion.html">Exoneración</a></li>
+            <li><a href="FE_Factura.html">Factura</a></li>
+            <li><a href="FE_Identificacion.html">Identificación</a></li>
+            <li><a href="FE_Impuesto.html">Impuesto</a></li>
+            <li><a href="FE_InformacionReferencia.html">Información de Referencia</a></li>
+            <li><a href="FE_LineaDetalle.html">Línea Detalle</a></li>
+            <li><a href="FE_Otros.html">Otros</a></li>
+            <li><a href="FE_OtrosCargos.html">Otros Cargos</a></li>
+            <li><a href="FE_Persona.html">Persona</a></li>
+            <li><a href="FE_ResumenFactura.html">Resumen Factura</a></li>
+            <li><a href="FE_TelefonoFax.html">Teléfono y Fax</a></li>
+            <li><a href="FE_Ubicacion.html">Ubicación</a></li>
+        </ul>
+    </nav>
+    <!-- partial:index.partial.html -->
+    <div class="container">
+        <form>
+            <div class="row">
+                <h4>Gestión de Persona</h4>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="tipoidpersona" placeholder="Tipo de Identificación" />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="idpersona" placeholder="Identificación (Presione Enter para Verificar Existencia)" onkeyup="verificarexistencia(event)" />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="nombre" placeholder="Nombre de la Persona" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="nombrecomercial" placeholder="Nombre Comercial" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <select id="ubicacionid" disabled><option>Seleccione la Ubicación</option></select>
+                    <input type="button" value="Nueva Ubicación" id="btnnuevaubicacion" style="width:220px; margin-left: 20px;" onclick="location.href='FE_Ubicacion.html'" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <select id="telefono" disabled><option>Seleccione el Teléfono</option></select>
+                    <input type="button" value="Nuevo Teléfono" id="btnnuevotelefono" style="width:220px; margin-left: 20px;" onclick="location.href='FE_TelefonoFax.html'" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <select id="fax" disabled><option>Seleccione el Fax</option></select>
+                    <input type="button" value="Nuevo Fax" id="btnnuevofax" style="width:220px; margin-left: 20px;" onclick="location.href='FE_TelefonoFax.html'" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="correo" placeholder="Correo Electrónico" disabled />
+                </div>
+                <div class="input-group">
+                    <input type="button" value="Guardar" id="btnguardar" disabled />
+                    <br><br>
+                    <input type="button" value="Eliminar" id="btneliminar" disabled />
+                    <br><br>
+                    <input type="button" value="Modificar" id="btnmodificar" disabled />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="formulario">
+        <div class="table-title">
+            <h3>Personas</h3>
+        </div>
+        <table class="table-fill" id="listado">
+        </table>
+    </div>
+    <br><br><br><br>
+    <!-- partial -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="./script.js"></script>
+
+    <script src="Javascript/jQuery.js"></script>
+    <script src="Javascript/Ajax.js"></script>
+    <script type="text/javascript">
+
+        function GuardarPersona() {
+
+            Identificacion.Numero = document.getElementById("idpersona").value;
+            Identificacion.Tipo = document.getElementById("tipoidpersona").value;
+            
+            Persona.NombrePersona = document.getElementById("nombre").value;
+            Persona.IdentificacionPersona = document.getElementById("idpersona").value;
+            Persona.NombreComercial = document.getElementById("nombrecomercial").value;
+            Persona.UbicacionPersona = document.getElementById("ubicacionid").value;
+            Persona.TelefonoPersona = document.getElementById("telefono").value;
+            Persona.FaxPersona = document.getElementById("fax").value;
+            Persona.CorreoPersona = document.getElementById("correo").value;
+
+            guardarPersona(Identificacion, Persona, document.getElementById("espaciomostraravance"));
+
+        }
+
+        function EliminarPersona() {
+
+            Persona.IdentifiacionPersona = document.getElementById("idpersona").value;
+
+            eliminarPersona(Persona, document.getElementById("espaciomostraravance"));
+
+        }
+
+        function ModificarPersona() {
+
+            Identificacion.Numero = document.getElementById("idpersona").value;
+            Identificacion.Tipo = document.getElementById("tipoidpersona").value;
+
+            Persona.NombrePersona = document.getElementById("nombre").value;
+            Persona.IdentificacionPersona = document.getElementById("idpersona").value;
+            Persona.NombreComercial = document.getElementById("nombrecomercial").value;
+            Persona.UbicacionPersona = document.getElementById("ubicacionid").value;
+            Persona.TelefonoPersona = document.getElementById("telefono").value;
+            Persona.FaxPersona = document.getElementById("fax").value;
+            Persona.CorreoPersona = document.getElementById("correo").value;
+
+            modificarPersona(Identificacion, Persona, document.getElementById("espaciomostraravance"));
+
+        }
+
+        (function () {
+
+            document.getElementById("btnguardar").addEventListener("click", GuardarPersona);
+
+            document.getElementById("btneliminar").addEventListener("click", EliminarPersona);
+
+            document.getElementById("btnmodificar").addEventListener("click", ModificarPersona);
+
+            cargarPersona(document.getElementById("espaciomostraravance"));
+
+            document.getElementById("idpersona").addEventListener("keypress", habilitarguardar);
+
+            cargarUbicacionaSelect(document.getElementById("ubicacionid"));
+
+            cargarTelefonoFaxaSelect(document.getElementById("telefono"));
+
+            cargarTelefonoFaxaSelect(document.getElementById("fax"));
+
+
+        })();
+
+        function cargardatosenelformulario(objetoserializado) {
+            document.getElementById("nombre").value = objetoserializado.Nombre1;
+            document.getElementById("idpersona").value = objetoserializado.IdentificacionNumero1.Numero1;
+            document.getElementById("nombrecomercial").value = objetoserializado.NombreComercial1;
+            document.getElementById("ubicacionid").value = objetoserializado.UbicacionID1.ID1;
+            document.getElementById("telefono").value = objetoserializado.TelefonoNumero1.NumTelefono1;
+            document.getElementById("fax").value = objetoserializado.FaxNumero1.NumTelefono1;
+            document.getElementById("correo").value = objetoserializado.CorreoElectronico1;
+
+            document.getElementById("nombre").disabled = false;
+            document.getElementById("nombrecomercial").disabled = false;
+            document.getElementById("ubicacionid").disabled = false;
+            document.getElementById("telefono").disabled = false;
+            document.getElementById("fax").disabled = false;
+            document.getElementById("correo").disabled = false;
+            document.getElementById("btnnuevaubicacion").disabled = false;
+            document.getElementById("btnnuevotelefono").disabled = false;
+            document.getElementById("btnnuevofax").disabled = false;
+
+            deshabilitarguardar();
+        }
+
+        function verificareliminar(iddelobjeto1) {
+            var answer = window.confirm("Desea eliminar la persona " + iddelobjeto1 + "?");
+            if (answer) {
+                Persona.IdentificacionPersona = iddelobjeto1;
+
+                eliminarPersona(Persona, document.getElementById("espaciomostraravance"));
+                habilitarguardar();
+            }
+            else {
+                alert("No se realizó ningún cambio.");
+            }
+
+        }
+
+        function verificarexistencia(event) {
+            if (event.which == 13 || event.keyCode == 13) {
+                if (document.getElementById("idpersona").value != "") {
+                    var idactual = document.getElementById("idpersona").value;
+                    Persona.IdentificacionPersona = idactual;
+                    verificarPersona(Persona, document.getElementById("espaciomostraravance"))
+                }
+            }
+        }
+
+        function rellenadatosexistentes(personaexistente) {
+
+            document.getElementById("nombre").value = personaexistente.Nombre1;
+            document.getElementById("nombrecomercial").value = personaexistente.NombreComercial1;
+            document.getElementById("ubicacionid").value = personaexistente.UbicacionID1.ID1;
+            document.getElementById("telefono").value = personaexistente.TelefonoNumero1.NumTelefono1;
+            document.getElementById("fax").value = personaexistente.FaxNumero1.NumTelefono1;
+            document.getElementById("correo").value = personaexistente.CorreoElectronico1;
+
+            document.getElementById("nombre").disabled = false;
+            document.getElementById("nombrecomercial").disabled = false;
+            document.getElementById("ubicacionid").disabled = false;
+            document.getElementById("telefono").disabled = false;
+            document.getElementById("fax").disabled = false;
+            document.getElementById("correo").disabled = false;
+            document.getElementById("btnnuevaubicacion").disabled = false;
+            document.getElementById("btnnuevotelefono").disabled = false;
+            document.getElementById("btnnuevofax").disabled = false;
+
+            deshabilitarguardar();
+
+        }
+
+        function limpiadatosparanuevo() {
+
+            document.getElementById("nombre").value = "";
+            document.getElementById("nombrecomercial").value = "";
+            document.getElementById("ubicacionid").value = "";
+            document.getElementById("telefono").value = "";
+            document.getElementById("fax").value = "";
+            document.getElementById("correo").value = "";
+
+            document.getElementById("nombre").disabled = false;
+            document.getElementById("nombrecomercial").disabled = false;
+            document.getElementById("ubicacionid").disabled = false;
+            document.getElementById("telefono").disabled = false;
+            document.getElementById("fax").disabled = false;
+            document.getElementById("correo").disabled = false;
+            document.getElementById("btnnuevaubicacion").disabled = false;
+            document.getElementById("btnnuevotelefono").disabled = false;
+            document.getElementById("btnnuevofax").disabled = false;
+
+            habilitarguardar();
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,355 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Resumen Factura</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+
+    <div id="espaciomostraravance"></div>
+
+    <input type="checkbox" id="menu" />
+    <label for="menu" class="menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </label>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="FE_CodigoComercial.html">Códigos Comerciales</a></li>
+            <li><a href="FE_CodigoTipoMoneda.html">Códigos de Tipo de Moneda</a></li>
+            <li><a href="FE_Descuento.html">Descuento</a></li>
+            <li><a href="FE_DetalleServicio.html">Detalles de Servicio</a></li>
+            <li><a href="FE_Exoneracion.html">Exoneración</a></li>
+            <li><a href="FE_Factura.html">Factura</a></li>
+            <li><a href="FE_Identificacion.html">Identificación</a></li>
+            <li><a href="FE_Impuesto.html">Impuesto</a></li>
+            <li><a href="FE_InformacionReferencia.html">Información de Referencia</a></li>
+            <li><a href="FE_LineaDetalle.html">Línea Detalle</a></li>
+            <li><a href="FE_Otros.html">Otros</a></li>
+            <li><a href="FE_OtrosCargos.html">Otros Cargos</a></li>
+            <li><a href="FE_Persona.html">Persona</a></li>
+            <li><a href="FE_ResumenFactura.html">Resumen Factura</a></li>
+            <li><a href="FE_TelefonoFax.html">Teléfono y Fax</a></li>
+            <li><a href="FE_Ubicacion.html">Ubicación</a></li>
+        </ul>
+    </nav>
+    <!-- partial:index.partial.html -->
+    <div class="container">
+        <form>
+            <div class="row">
+                <h4>Gestión de Resumen Factura</h4>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="clave" placeholder="Clave (Presione Enter para Verificar Existencia)" onkeyup="verificarexistencia(event)" />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="servgravados" placeholder="Total de Servicios Gravados" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="servexentos" placeholder="Total de Servicios Exentos" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="servexonerados" placeholder="Total de Servicios Exonerados" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="mercgravadas" placeholder="Total de Mercancías Gravadas" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="mercexentas" placeholder="Total de Mercancías Exentas" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="mercexoneradas" placeholder="Total de Mercancías Exoneradas" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="gravado" placeholder="Total Gravado" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="exento" placeholder="Total Exento" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="exonerado" placeholder="Total Exonerado" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="venta" placeholder="Total de Venta" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="descuentos" placeholder="Total de Descuentos" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="ventaneta" placeholder="Total de Venta Neta" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="impuesto" placeholder="Total de Impuesto" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="ivadevuelto" placeholder="Total de IVA Devuelto" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="otroscargos" placeholder="Total de Otros Cargos" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="comprobante" placeholder="Total de Comprobante" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <select id="codigotipomoneda" disabled><option>Seleccione el Código de Tipo de Moneda</option></select>
+                    <input type="button" value="Nuevo Tipo" id="btnnuevotipo" style="width:220px; margin-left: 20px;" disabled />
+                </div>
+                <div class="input-group">
+                    <input type="button" value="Guardar" id="btnguardar" disabled />
+                    <br><br>
+                    <input type="button" value="Eliminar" id="btneliminar" disabled />
+                    <br><br>
+                    <input type="button" value="Modificar" id="btnmodificar" disabled />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="formulario">
+        <div class="table-title">
+            <h3>Resumen Factura</h3>
+        </div>
+        <table class="table-fill" id="listado">
+        </table>
+    </div>
+    <br><br><br><br>
+    <!-- partial -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="./script.js"></script>
+
+    <script src="Javascript/jQuery.js"></script>
+    <script src="Javascript/Ajax.js"></script>
+    <script type="text/javascript">
+
+        function GuardarResumenFactura() {
+
+            ResumenFactura.TotalServGravados = document.getElementById("servgravados").value;
+            ResumenFactura.TotalServExentos = document.getElementById("servexentos").value;
+            ResumenFactura.TotalServExonerado = document.getElementById("servexonerados").value;
+            ResumenFactura.TotalMercanciasGravadas = document.getElementById("mercgravadas").value;
+            ResumenFactura.TotalMercanciasExentas = document.getElementById("mercexentas").value;
+            ResumenFactura.TotalMercanciasExoneradas = document.getElementById("mercexoneradas").value;
+            ResumenFactura.TotalGravado = document.getElementById("gravado").value;
+            ResumenFactura.TotalExento = document.getElementById("exento").value;
+            ResumenFactura.TotalExonerado = document.getElementById("exonerado").value;
+            ResumenFactura.TotalVenta = document.getElementById("venta").value;
+            ResumenFactura.TotalDescuentos = document.getElementById("descuentos").value;
+            ResumenFactura.TotalVentaNeta = document.getElementById("ventaneta").value;
+            ResumenFactura.TotalImpuesto = document.getElementById("impuesto").value;
+            ResumenFactura.TotalIVADevuelto = document.getElementById("ivadevuelto").value;
+            ResumenFactura.TotalOtrosCargos = document.getElementById("otroscargos").value;
+            ResumenFactura.TotalComprobante = document.getElementById("comprobante").value;
+            ResumenFactura.Clave = document.getElementById("clave").value;
+            ResumenFactura.CodigoTipoMoneda = document.getElementById("codigotipomoneda").value;
+
+            guardarResumenFactura(ResumenFactura, document.getElementById("espaciomostraravance"));
+
+        }
+
+        function EliminarResumenFactura() {
+
+            ResumenFactura.Clave = document.getElementById("clave").value;
+
+            eliminarResumenFactura(ResumenFactura, document.getElementById("espaciomostraravance"));
+
+        }
+
+        function ModificarResumenFactura() {
+
+            ResumenFactura.TotalServGravados = document.getElementById("servgravados").value;
+            ResumenFactura.TotalServExentos = document.getElementById("servexentos").value;
+            ResumenFactura.TotalServExonerado = document.getElementById("servexonerados").value;
+            ResumenFactura.TotalMercanciasGravadas = document.getElementById("mercgravadas").value;
+            ResumenFactura.TotalMercanciasExentas = document.getElementById("mercexentas").value;
+            ResumenFactura.TotalMercanciasExoneradas = document.getElementById("mercexoneradas").value;
+            ResumenFactura.TotalGravado = document.getElementById("gravado").value;
+            ResumenFactura.TotalExento = document.getElementById("exento").value;
+            ResumenFactura.TotalExonerado = document.getElementById("exonerado").value;
+            ResumenFactura.TotalVenta = document.getElementById("venta").value;
+            ResumenFactura.TotalDescuentos = document.getElementById("descuentos").value;
+            ResumenFactura.TotalVentaNeta = document.getElementById("ventaneta").value;
+            ResumenFactura.TotalImpuesto = document.getElementById("impuesto").value;
+            ResumenFactura.TotalIVADevuelto = document.getElementById("ivadevuelto").value;
+            ResumenFactura.TotalOtrosCargos = document.getElementById("otroscargos").value;
+            ResumenFactura.TotalComprobante = document.getElementById("comprobante").value;
+            ResumenFactura.Clave = document.getElementById("clave").value;
+            ResumenFactura.CodigoTipoMoneda = document.getElementById("codigotipomoneda").value;
+
+            modificarResumenFactura(ResumenFactura, document.getElementById("espaciomostraravance"));
+
+        }
+
+        (function () {
+
+            document.getElementById("btnguardar").addEventListener("click", GuardarResumenFactura);
+
+            document.getElementById("btneliminar").addEventListener("click", EliminarResumenFactura);
+
+            document.getElementById("btnmodificar").addEventListener("click", ModificarResumenFactura);
+
+            cargarResumenFactura(document.getElementById("espaciomostraravance"));
+
+            document.getElementById("clave").addEventListener("keypress", habilitarguardar);
+
+            cargarCodigoTipoMonedaaSelect(document.getElementById("codigotipomoneda"));
+
+
+        })();
+
+        function cargardatosenelformulario(objetoserializado) {
+
+            document.getElementById("servgravados").value = objetoserializado.TotalServGravados1;
+            document.getElementById("servexentos").value = objetoserializado.TotalServExentos1;
+            document.getElementById("servexonerados").value = objetoserializado.TotalServExonerado1;
+            document.getElementById("mercgravadas").value = objetoserializado.TotalMercanciasGravadas1;
+            document.getElementById("mercexentas").value = objetoserializado.TotalMercanciasExentas1;
+            document.getElementById("mercexoneradas").value = objetoserializado.TotalMercanciasExoneradas1;
+            document.getElementById("gravado").value = objetoserializado.TotalGravado1;
+            document.getElementById("exento").value = objetoserializado.TotalExento1;
+            document.getElementById("exonerado").value = objetoserializado.TotalExonerado1;
+            document.getElementById("venta").value = objetoserializado.TotalVenta1;
+            document.getElementById("descuentos").value = objetoserializado.TotalDescuentos1;
+            document.getElementById("ventaneta").value = objetoserializado.TotalVentaNeta1;
+            document.getElementById("impuesto").value = objetoserializado.TotalImpuesto1;
+            document.getElementById("ivadevuelto").value = objetoserializado.TotalIVADevuelto1;
+            document.getElementById("otroscargos").value = objetoserializado.TotalOtrosCargos1;
+            document.getElementById("comprobante").value = objetoserializado.TotalComprobante1;
+            document.getElementById("clave").value = objetoserializado.Clave1.Clave1;
+            document.getElementById("codigotipomoneda").value = objetoserializado.CodigoTipoMoneda1.CodigoMoneda1;
+
+            document.getElementById("servgravados").disabled = false;
+            document.getElementById("servexentos").disabled = false;
+            document.getElementById("servexonerados").disabled = false;
+            document.getElementById("mercgravadas").disabled = false;
+            document.getElementById("mercexentas").disabled = false;
+            document.getElementById("mercexoneradas").disabled = false;
+            document.getElementById("gravado").disabled = false;
+            document.getElementById("exento").disabled = false;
+            document.getElementById("exonerado").disabled = false;
+            document.getElementById("venta").disabled = false;
+            document.getElementById("descuentos").disabled = false;
+            document.getElementById("ventaneta").disabled = false;
+            document.getElementById("impuesto").disabled = false;
+            document.getElementById("ivadevuelto").disabled = false;
+            document.getElementById("otroscargos").disabled = false;
+            document.getElementById("comprobante").disabled = false;
+            document.getElementById("codigotipomoneda").disabled = false;
+
+            deshabilitarguardar();
+        }
+
+        function verificareliminar(iddelobjeto1) {
+            var answer = window.confirm("Desea eliminar el resumen factura " + iddelobjeto1 + "?");
+            if (answer) {
+                ResumenFactura.Clave = iddelobjeto1;
+
+                eliminarResumenFactura(ResumenFactura, document.getElementById("espaciomostraravance"));
+                habilitarguardar();
+            }
+            else {
+                alert("No se realizó ningún cambio.");
+            }
+
+        }
+
+        function verificarexistencia(event) {
+            if (event.which == 13 || event.keyCode == 13) {
+                if (document.getElementById("clave").value != "") {
+                    var idactual = document.getElementById("clave").value;
+                    ResumenFactura.Clave = idactual;
+                    verificarResumenFactura(ResumenFactura, document.getElementById("espaciomostraravance"))
+                }
+            }
+        }
+
+        function rellenadatosexistentes(resumenfacturaexistente) {
+
+            document.getElementById("servgravados").value = resumenfacturaexistente.TotalServGravados1;
+            document.getElementById("servexentos").value = resumenfacturaexistente.TotalServExentos1;
+            document.getElementById("servexonerados").value = resumenfacturaexistente.TotalServExonerado1;
+            document.getElementById("mercgravadas").value = resumenfacturaexistente.TotalMercanciasGravadas1;
+            document.getElementById("mercexentas").value = resumenfacturaexistente.TotalMercanciasExentas1;
+            document.getElementById("mercexoneradas").value = resumenfacturaexistente.TotalMercanciasExoneradas1;
+            document.getElementById("gravado").value = resumenfacturaexistente.TotalGravado1;
+            document.getElementById("exento").value = resumenfacturaexistente.TotalExento1;
+            document.getElementById("exonerado").value = resumenfacturaexistente.TotalExonerado1;
+            document.getElementById("venta").value = resumenfacturaexistente.TotalVenta1;
+            document.getElementById("descuentos").value = resumenfacturaexistente.TotalDescuentos1;
+            document.getElementById("ventaneta").value = resumenfacturaexistente.TotalVentaNeta1;
+            document.getElementById("impuesto").value = resumenfacturaexistente.TotalImpuesto1;
+            document.getElementById("ivadevuelto").value = resumenfacturaexistente.TotalIVADevuelto1;
+            document.getElementById("otroscargos").value = resumenfacturaexistente.TotalOtrosCargos1;
+            document.getElementById("comprobante").value = resumenfacturaexistente.TotalComprobante1;
+            document.getElementById("codigotipomoneda").value = resumenfacturaexistente.CodigoTipoMoneda1.CodigoMoneda1;
+
+            document.getElementById("servgravados").disabled = false;
+            document.getElementById("servexentos").disabled = false;
+            document.getElementById("servexonerados").disabled = false;
+            document.getElementById("mercgravadas").disabled = false;
+            document.getElementById("mercexentas").disabled = false;
+            document.getElementById("mercexoneradas").disabled = false;
+            document.getElementById("gravado").disabled = false;
+            document.getElementById("exento").disabled = false;
+            document.getElementById("exonerado").disabled = false;
+            document.getElementById("venta").disabled = false;
+            document.getElementById("descuentos").disabled = false;
+            document.getElementById("ventaneta").disabled = false;
+            document.getElementById("impuesto").disabled = false;
+            document.getElementById("ivadevuelto").disabled = false;
+            document.getElementById("otroscargos").disabled = false;
+            document.getElementById("comprobante").disabled = false;
+            document.getElementById("codigotipomoneda").disabled = false;
+
+            deshabilitarguardar();
+
+        }
+
+        function limpiadatosparanuevo() {
+
+            document.getElementById("servgravados").value = "";
+            document.getElementById("servexentos").value = "";
+            document.getElementById("servexonerados").value = "";
+            document.getElementById("mercgravadas").value = "";
+            document.getElementById("mercexentas").value = "";
+            document.getElementById("mercexoneradas").value = "";
+            document.getElementById("gravado").value = "";
+            document.getElementById("exento").value = "";
+            document.getElementById("exonerado").value = "";
+            document.getElementById("venta").value = "";
+            document.getElementById("descuentos").value = "";
+            document.getElementById("ventaneta").value = "";
+            document.getElementById("impuesto").value = "";
+            document.getElementById("ivadevuelto").value = "";
+            document.getElementById("otroscargos").value = "";
+            document.getElementById("comprobante").value = "";
+            document.getElementById("codigotipomoneda").value = "";
+
+            document.getElementById("servgravados").disabled = false;
+            document.getElementById("servexentos").disabled = false;
+            document.getElementById("servexonerados").disabled = false;
+            document.getElementById("mercgravadas").disabled = false;
+            document.getElementById("mercexentas").disabled = false;
+            document.getElementById("mercexoneradas").disabled = false;
+            document.getElementById("gravado").disabled = false;
+            document.getElementById("exento").disabled = false;
+            document.getElementById("exonerado").disabled = false;
+            document.getElementById("venta").disabled = false;
+            document.getElementById("descuentos").disabled = false;
+            document.getElementById("ventaneta").disabled = false;
+            document.getElementById("impuesto").disabled = false;
+            document.getElementById("ivadevuelto").disabled = false;
+            document.getElementById("otroscargos").disabled = false;
+            document.getElementById("comprobante").disabled = false;
+            document.getElementById("codigotipomoneda").disabled = false;
+
+            habilitarguardar();
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,284 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Factura</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+
+
+</head>
+<body>
+
+    <div id="espaciomostraravance"></div>
+
+    <input type="checkbox" id="menu" />
+    <label for="menu" class="menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </label>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="FE_CodigoComercial.html">Códigos Comerciales</a></li>
+            <li><a href="FE_CodigoTipoMoneda.html">Códigos de Tipo de Moneda</a></li>
+            <li><a href="FE_Descuento.html">Descuento</a></li>
+            <li><a href="FE_DetalleServicio.html">Detalles de Servicio</a></li>
+            <li><a href="FE_Exoneracion.html">Exoneración</a></li>
+            <li><a href="FE_Factura.html">Factura</a></li>
+            <li><a href="FE_Identificacion.html">Identificación</a></li>
+            <li><a href="FE_Impuesto.html">Impuesto</a></li>
+            <li><a href="FE_InformacionReferencia.html">Información de Referencia</a></li>
+            <li><a href="FE_LineaDetalle.html">Línea Detalle</a></li>
+            <li><a href="FE_Otros.html">Otros</a></li>
+            <li><a href="FE_OtrosCargos.html">Otros Cargos</a></li>
+            <li><a href="FE_Persona.html">Persona</a></li>
+            <li><a href="FE_ResumenFactura.html">Resumen Factura</a></li>
+            <li><a href="FE_TelefonoFax.html">Teléfono y Fax</a></li>
+            <li><a href="FE_Ubicacion.html">Ubicación</a></li>
+        </ul>
+    </nav>
+    <!-- partial:index.partial.html -->
+    <div class="container">
+        <form>
+            <div class="row">
+                <h4>Gestión de Factura</h4>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="clave" placeholder="Clave (Presione Enter para Verificar Existencia)" onkeyup="verificarexistencia(event)" />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="codactividad" placeholder="Código de Actividad" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="numconsecutivo" placeholder="Número Consecutivo" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="datetime" id="fechaemision" placeholder="Fecha de Emisión" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="emisor" placeholder="Emisor" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="receptor" placeholder="Receptor" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="condventa" placeholder="Condición de Venta" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="plazocredito" placeholder="Plazo del Crédito" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="mediopago" placeholder="Medio de Pago" disabled />
+                </div>
+                <div class="input-group">
+                    <input type="button" value="Guardar" id="btnguardar" disabled />
+                    <br><br>
+                    <input type="button" value="Eliminar" id="btneliminar" disabled />
+                    <br><br>
+                    <input type="button" value="Modificar" id="btnmodificar" disabled />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container" style="width: 1500px; background-color:#EBEBEB;">
+        <div class="formulario">
+            <div class="table-title">
+                <h3>Líneas Detalle Seleccionadas</h3>
+            </div>
+            <table class="table-fill" id="lineasdetalleagregados">
+            </table>
+        </div>
+    </div>
+        <div class="container" style="width: 1500px; background-color:#EBEBEB;">
+            <div class="formulario">
+                <div class="table-title">
+                    <h3>Lista de Líneas Detalle</h3>
+                </div>
+                <table class="table-fill" id="listadodelineasdetalle"></table>
+            </div>
+        </div>
+        <div class="container" style="width: 1500px; background-color:#EBEBEB;">
+            <div class="formulario">
+                <div class="table-title">
+                    <h3>Lista de Emisores</h3>
+                </div>
+                <table class="table-fill" id="listadodeemisores"></table>
+            </div>
+        </div>
+        <div class="container" style="width: 1500px;background-color:#EBEBEB;">
+            <div class="formulario">
+                <div class="table-title">
+                    <h3>Lista de Receptores</h3>
+                </div>
+                <table class="table-fill" id="listadodereceptores" style="margin-top: 20px;"></table>
+            </div>
+        </div>
+        <div class="formulario">
+            <div class="table-title">
+                <h3>Facturas</h3>
+            </div>
+            <table class="table-fill" id="listado">
+            </table>
+        </div>
+        <br><br><br><br>
+        <!-- partial -->
+        <script src="Javascript/jQuery.js"></script>
+        <script src="Javascript/Ajax.js"></script>
+        <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript">
+
+            function GuardarFactura() {
+
+                Factura.CodActividad = document.getElementById("codactividad").value;
+                Factura.Clave = document.getElementById("clave").value;
+                Factura.NumConsecutivo = document.getElementById("numconsecutivo").value;
+                Factura.FechaEmision = document.getElementById("fechaemision").value;
+                Factura.Emisor = document.getElementById("emisor").value;
+                Factura.Receptor = document.getElementById("receptor").value;
+                Factura.CondVenta = document.getElementById("condventa").value;
+                Factura.PlazoCredito = document.getElementById("plazocredito").value;
+                Factura.MedioPago = document.getElementById("mediopago").value;
+
+                guardarFactura(Factura, document.getElementById("espaciomostraravance"));
+
+            }
+
+            function EliminarFactura() {
+
+                Factura.Clave = document.getElementById("clave").value;
+
+                eliminarFactura(Factura, document.getElementById("espaciomostraravance"));
+
+            }
+
+            function ModificarFactura() {
+
+                Factura.CodActividad = document.getElementById("codactividad").value;
+                Factura.Clave = document.getElementById("clave").value;
+                Factura.NumConsecutivo = document.getElementById("numconsecutivo").value;
+                Factura.FechaEmision = document.getElementById("fechaemision").value;
+                Factura.Emisor = document.getElementById("emisor").value;
+                Factura.Receptor = document.getElementById("receptor").value;
+                Factura.CondVenta = document.getElementById("condventa").value;
+                Factura.PlazoCredito = document.getElementById("plazocredito").value;
+                Factura.MedioPago = document.getElementById("mediopago").value;
+
+                modificarFactura(Factura, document.getElementById("espaciomostraravance"));
+
+            }
+
+            (function () {
+
+                document.getElementById("btnguardar").addEventListener("click", GuardarFactura);
+
+                document.getElementById("btneliminar").addEventListener("click", EliminarFactura);
+
+                document.getElementById("btnmodificar").addEventListener("click", ModificarFactura);
+
+                cargarFactura(document.getElementById("espaciomostraravance"));
+
+                document.getElementById("clave").addEventListener("keypress", habilitarguardar);
+
+                cargarPersonaEmisorParaSeleccionar(document.getElementById("espaciomostraravance"), "listadodeemisores");
+
+                cargarPersonaReceptorParaSeleccionar(document.getElementById("espaciomostraravance"), "listadodereceptores");
+
+                cargarLineaDetalleParaSeleccionar(document.getElementById("espaciomostraravance"), "listadodelineasdetalle");
+
+
+            })();
+
+            function cargardatosenelformulario(objetoserializado) {
+                document.getElementById("codactividad").value = objetoserializado.CodigoActividad1;
+                document.getElementById("clave").value = objetoserializado.Clave1;
+                document.getElementById("numconsecutivo").value = objetoserializado.NumeroConsecutivo1;
+                document.getElementById("fechaemision").value = objetoserializado.FechaEmision1;
+                document.getElementById("emisor").value = objetoserializado.EmisorPersona1.IdentificacionNumero1.Numero1;
+                document.getElementById("receptor").value = objetoserializado.ReceptorPersona1.IdentificacionNumero1.Numero1;
+                document.getElementById("condventa").value = objetoserializado.CondicionVenta1;
+                document.getElementById("plazocredito").value = objetoserializado.PlazoCredito1;
+                document.getElementById("mediopago").value = objetoserializado.MedioPago1;
+
+                document.getElementById("codactividad").disabled = false;
+                document.getElementById("numconsecutivo").disabled = false;
+                document.getElementById("fechaemision").disabled = false;
+                document.getElementById("condventa").disabled = false;
+                document.getElementById("plazocredito").disabled = false;
+                document.getElementById("mediopago").disabled = false;
+
+                deshabilitarguardar();
+            }
+
+            function verificareliminar(iddelobjeto1) {
+                var answer = window.confirm("Desea eliminar la factura " + iddelobjeto1 + "?");
+                if (answer) {
+                    Factura.Clave = iddelobjeto1;
+
+                    eliminarFactura(Factura, document.getElementById("espaciomostraravance"));
+                    habilitarguardar();
+                }
+                else {
+                    alert("No se realizó ningún cambio.");
+                }
+
+            }
+
+            function verificarexistencia(event) {
+                if (event.which == 13 || event.keyCode == 13) {
+                    if (document.getElementById("clave").value != "") {
+                        var idactual = document.getElementById("clave").value;
+                        Factura.Clave = idactual;
+                        verificarFactura(Factura, document.getElementById("espaciomostraravance"))
+                    }
+                }
+            }
+
+            function rellenadatosexistentes(facturaexistente) {
+
+                document.getElementById("codactividad").value = facturaexistente.CodigoActividad1;
+                document.getElementById("numconsecutivo").value = facturaexistente.NumeroConsecutivo1;
+                document.getElementById("fechaemision").value = facturaexistente.FechaEmision1;
+                document.getElementById("emisor").value = facturaexistente.EmisorPersona1.IdentificacionNumero1.Numero1;
+                document.getElementById("receptor").value = facturaexistente.ReceptorPersona1.IdentificacionNumero1.Numero1;
+                document.getElementById("condventa").value = facturaexistente.CondicionVenta1;
+                document.getElementById("plazocredito").value = facturaexistente.PlazoCredito1;
+                document.getElementById("mediopago").value = facturaexistente.MedioPago1;
+
+                document.getElementById("codactividad").disabled = false;
+                document.getElementById("numconsecutivo").disabled = false;
+                document.getElementById("fechaemision").disabled = false;
+                document.getElementById("condventa").disabled = false;
+                document.getElementById("plazocredito").disabled = false;
+                document.getElementById("mediopago").disabled = false;
+
+                deshabilitarguardar();
+            }
+
+            function limpiadatosparanuevo() {
+
+                document.getElementById("codactividad").value = "";
+                document.getElementById("numconsecutivo").value = "";
+                document.getElementById("fechaemision").value = "";
+                document.getElementById("emisor").value = "";
+                document.getElementById("receptor").value = "";
+                document.getElementById("condventa").value = "";
+                document.getElementById("plazocredito").value = "";
+                document.getElementById("mediopago").value = "";
+
+                document.getElementById("codactividad").disabled = false;
+                document.getElementById("numconsecutivo").disabled = false;
+                document.getElementById("fechaemision").disabled = false;
+                document.getElementById("condventa").disabled = false;
+                document.getElementById("plazocredito").disabled = false;
+                document.getElementById("mediopago").disabled = false;
+
+                habilitarguardar();
+            }
+
+        </script>
+
+</body>
+</html>

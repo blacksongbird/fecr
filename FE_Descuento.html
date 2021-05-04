@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Descuentos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+    <div id="espaciomostraravance"></div>
+
+    <input type="checkbox" id="menu" />
+    <label for="menu" class="menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </label>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="FE_CodigoComercial.html">Códigos Comerciales</a></li>
+            <li><a href="FE_CodigoTipoMoneda.html">Códigos de Tipo de Moneda</a></li>
+            <li><a href="FE_Descuento.html">Descuento</a></li>
+            <li><a href="FE_DetalleServicio.html">Detalles de Servicio</a></li>
+            <li><a href="FE_Exoneracion.html">Exoneración</a></li>
+            <li><a href="FE_Factura.html">Factura</a></li>
+            <li><a href="FE_Identificacion.html">Identificación</a></li>
+            <li><a href="FE_Impuesto.html">Impuesto</a></li>
+            <li><a href="FE_InformacionReferencia.html">Información de Referencia</a></li>
+            <li><a href="FE_LineaDetalle.html">Línea Detalle</a></li>
+            <li><a href="FE_Otros.html">Otros</a></li>
+            <li><a href="FE_OtrosCargos.html">Otros Cargos</a></li>
+            <li><a href="FE_Persona.html">Persona</a></li>
+            <li><a href="FE_ResumenFactura.html">Resumen Factura</a></li>
+            <li><a href="FE_TelefonoFax.html">Teléfono y Fax</a></li>
+            <li><a href="FE_Ubicacion.html">Ubicación</a></li>
+        </ul>
+    </nav>
+    <!-- partial:index.partial.html -->
+    <div class="container">
+        <form>
+            <div class="row">
+                <h4>Gestión de Descuentos</h4>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="montodescuento" placeholder="Monto del Descuento" />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="naturaleza" placeholder="Naturaleza" />
+                </div>
+                <div class="input-group">
+                    <input type="button" value="Guardar" id="btnguardar" />
+                    <br><br>
+                    <input type="button" value="Eliminar" id="btneliminar" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="formulario">
+        <div class="table-title">
+            <h3>Descuentos</h3>
+        </div>
+        <table class="table-fill" id="listado">
+        </table>
+    </div>
+    <br><br><br><br>
+    <!-- partial -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="./script.js"></script>
+
+    <script src="Javascript/jQuery.js"></script>
+    <script src="Javascript/Ajax.js"></script>
+    <script type="text/javascript">
+
+        function GuardarDescuento() {
+
+            Descuento.Monto = document.getElementById("montodescuento").value;
+            Descuento.Naturaleza = document.getElementById("naturaleza").value;
+
+            guardarDescuento(Descuento, document.getElementById("espaciomostraravance"));
+
+        }
+
+        function EliminarDescuento() {
+
+            Descuento.Monto = document.getElementById("montodescuento").value;
+            Descuento.Naturaleza = document.getElementById("naturaleza").value;
+
+            eliminarDescuento(Descuento, document.getElementById("espaciomostraravance"));
+
+        }
+
+
+        (function () {
+
+            document.getElementById("btnguardar").addEventListener("click", GuardarDescuento);
+
+            document.getElementById("btneliminar").addEventListener("click", EliminarDescuento);
+
+            cargarDescuento(document.getElementById("espaciomostraravance"));
+
+
+        })();
+
+        function verificareliminar(iddelobjeto1, iddelobjeto2) {
+            var answer = window.confirm("Desea eliminar el descuento de " + iddelobjeto1 + ' con naturaleza de ' + iddelobjeto2 + "?");
+            if (answer) {
+                Descuento.Monto = iddelobjeto1;
+                Descuento.Naturaleza = iddelobjeto2;
+
+                eliminarDescuento(Descuento, document.getElementById("espaciomostraravance"));
+                habilitarguardar();
+            }
+            else {
+                alert("No se realizó ningún cambio.");
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>

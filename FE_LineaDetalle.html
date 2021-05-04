@@ -1,0 +1,407 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Línea Detalle</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+
+</head>
+<body>
+
+    <div id="espaciomostraravance"></div>
+
+    <input type="checkbox" id="menu" />
+    <label for="menu" class="menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </label>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="FE_CodigoComercial.html">Códigos Comerciales</a></li>
+            <li><a href="FE_CodigoTipoMoneda.html">Códigos de Tipo de Moneda</a></li>
+            <li><a href="FE_Descuento.html">Descuento</a></li>
+            <li><a href="FE_DetalleServicio.html">Detalles de Servicio</a></li>
+            <li><a href="FE_Exoneracion.html">Exoneración</a></li>
+            <li><a href="FE_Factura.html">Factura</a></li>
+            <li><a href="FE_Identificacion.html">Identificación</a></li>
+            <li><a href="FE_Impuesto.html">Impuesto</a></li>
+            <li><a href="FE_InformacionReferencia.html">Información de Referencia</a></li>
+            <li><a href="FE_LineaDetalle.html">Línea Detalle</a></li>
+            <li><a href="FE_Otros.html">Otros</a></li>
+            <li><a href="FE_OtrosCargos.html">Otros Cargos</a></li>
+            <li><a href="FE_Persona.html">Persona</a></li>
+            <li><a href="FE_ResumenFactura.html">Resumen Factura</a></li>
+            <li><a href="FE_TelefonoFax.html">Teléfono y Fax</a></li>
+            <li><a href="FE_Ubicacion.html">Ubicación</a></li>
+        </ul>
+    </nav>
+    <!-- partial:index.partial.html -->
+    <div class="container" style="height: 1000px">
+        <form>
+            <div class="col-half">
+                <div>
+                    <h4>Gestión de Línea Detalle</h4>
+                    <div class="input-group input-group-icon">
+                        <input type="text" id="consecutivo" placeholder="Consecutivo (Presione Enter para Verificar Existencia)" onkeyup="verificarexistencia(event)" />
+                    </div>
+                    <div class="input-group input-group-icon">
+                        <input type="text" id="numerolinea" placeholder="Número de Línea" disabled />
+                    </div>
+                    <div class="input-group input-group-icon">
+                        <input type="text" id="partidaarancelaria" placeholder="Partida Arancelaria" disabled />
+                    </div>
+                    <div class="input-group input-group-icon">
+                        <input type="text" id="codigo" placeholder="Código" disabled />
+                    </div>
+                    <div class="input-group input-group-icon">
+                        <input type="text" id="cantidad" placeholder="Cantidad" onkeyup="cambioCantidad()" disabled />
+                    </div>
+                    <div class="input-group input-group-icon">
+                        <input type="text" id="unidadmedida" placeholder="Unidad de Medida" disabled />
+                    </div>
+                    <div class="input-group input-group-icon">
+                        <input type="text" id="unidadmedidacomercial" placeholder="Unidad de Medida Comercial" disabled />
+                    </div>
+                    <div class="input-group input-group-icon">
+                        <input type="text" id="detalle" placeholder="Detalle" disabled />
+                    </div>
+                    <div class="input-group input-group-icon">
+                        <input type="text" id="preciounitario" placeholder="Precio Unitario" onkeyup="cambioPrecioUnitario()" disabled />
+                    </div>
+                </div>
+            </div>
+            <div class="col-half" style="float: right; margin-top: 90px;">
+                <div class="input-group input-group-icon">
+                    <input type="text" id="montototal" placeholder="Monto Total" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="subtotal" placeholder="Subtotal" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="baseimponible" placeholder="Base Imponible" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="impuestoneto" placeholder="Impuesto Neto" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="montototallinea" placeholder="Monto Total de Línea" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <select id="montodescuento" onchange="cambioDescuento()" disabled><option>Seleccione el Descuento</option></select>
+                    <input type="button" value="Nuevo Descuento" id="btnnuevodescuento" style="width:220px; margin-left: 20px;" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <select id="naturalezadescuento" disabled><option>Seleccione la Naturaleza del Descuento</option></select>
+                    <input type="button" value="Nueva Naturaleza" id="btnnuevanaturaleza" style="width:220px; margin-left: 20px;" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <select id="codigocomercialtipo" disabled><option>Seleccione el Tipo de Código Comercial</option></select>
+                    <input type="button" value="Nuevo Tipo" id="btnnuevotipo" style="width:220px; margin-left: 20px;" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <select id="codigocomercial" disabled><option>Seleccione el Código Comercial</option></select>
+                    <input type="button" value="Nuevo Código" id="btnnuevocodigocomercial" style="width:220px; margin-left: 20px;" disabled />
+                </div>
+            </div>
+            <div class="col"">
+                <div class="input-group">
+                    <input type="button" value="Guardar" id="btnguardar" disabled />
+                    <br><br>
+                    <input type="button" value="Eliminar" id="btneliminar" disabled />
+                    <br><br>
+                    <input type="button" value="Modificar" id="btnmodificar" disabled />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="formulario">
+        <div class="table-title">
+            <h3>Impuestos Seleccionados</h3>
+        </div>
+        <table class="table-fill" id="impuestosagregados">
+        </table>
+    </div>
+    <div class="container" style="width: 1500px; background-color:#EBEBEB;">
+        <div class="formulario">
+            <div class="table-title">
+                <h3>Lista de Impuestos</h3>
+            </div>
+            <table id="listadodeimpuestos"></table>
+        </div>
+    </div>
+    <div class="container" style="width: 1500px;background-color:#EBEBEB;">
+        <div class="formulario">
+            <div class="table-title">
+                <h3>Lista de Exoneraciones</h3>
+            </div>
+            <table id="listadodeexoneraciones" style="margin-top: 20px;"></table>
+        </div>
+    </div>
+    <div class="formulario">
+        <div class="table-title">
+            <h3>Línea Detalle</h3>
+        </div>
+        <table class="table-fill" id="listado">
+        </table>
+    </div>
+    <br><br><br><br>
+    <!-- partial -->
+    <script src="Javascript/jQuery.js"></script>
+    <script src="Javascript/Ajax.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="./script.js"></script>
+
+    <script type="text/javascript">
+
+        function GuardarLineaDetalle() {
+
+            LineaDetalle.NumeroLinea = document.getElementById("numerolinea").value;
+            LineaDetalle.PartidaArancelaria = document.getElementById("partidaarancelaria").value;
+            LineaDetalle.Codigo = document.getElementById("codigo").value;
+            LineaDetalle.Cantidad = document.getElementById("cantidad").value;
+            LineaDetalle.UnidadMedida = document.getElementById("unidadmedida").value;
+            LineaDetalle.UnidadMedidaComercial = document.getElementById("unidadmedidacomercial").value;
+            LineaDetalle.Detalle = document.getElementById("detalle").value;
+            LineaDetalle.PrecioUnitario = document.getElementById("preciounitario").value;
+            LineaDetalle.MontoTotal = document.getElementById("montototal").value;
+            LineaDetalle.Subtotal = document.getElementById("subtotal").value;
+            LineaDetalle.BaseImponible = document.getElementById("baseimponible").value;
+            LineaDetalle.ImpuestoNeto = document.getElementById("impuestoneto").value;
+            LineaDetalle.MontoTotalLinea = document.getElementById("montototallinea").value;
+            LineaDetalle.Consecutivo = document.getElementById("consecutivo").value;
+            LineaDetalle.MontoDescuento = document.getElementById("montodescuento").value;
+            LineaDetalle.NaturalezaDescuento = document.getElementById("naturalezadescuento").value;
+            LineaDetalle.CodigoComercialTipo = document.getElementById("codigocomercialtipo").value;
+            LineaDetalle.CodigoComercialCodigo = document.getElementById("codigocomercial").value;
+
+            guardarLineaDetalle(LineaDetalle, document.getElementById("espaciomostraravance"));
+
+        }
+
+        function EliminarLineaDetalle() {
+
+            LineaDetalle.Consecutivo = document.getElementById("consecutivo").value;
+
+            eliminarLineaDetalle(LineaDetalle, document.getElementById("espaciomostraravance"));
+
+        }
+
+        function ModificarLineaDetalle() {
+
+            LineaDetalle.NumeroLinea = document.getElementById("numerolinea").value;
+            LineaDetalle.PartidaArancelaria = document.getElementById("partidaarancelaria").value;
+            LineaDetalle.Codigo = document.getElementById("codigo").value;
+            LineaDetalle.Cantidad = document.getElementById("cantidad").value;
+            LineaDetalle.UnidadMedida = document.getElementById("unidadmedida").value;
+            LineaDetalle.UnidadMedidaComercial = document.getElementById("unidadmedidacomercial").value;
+            LineaDetalle.Detalle = document.getElementById("detalle").value;
+            LineaDetalle.PrecioUnitario = document.getElementById("preciounitario").value;
+            LineaDetalle.MontoTotal = document.getElementById("montototal").value;
+            LineaDetalle.Subtotal = document.getElementById("subtotal").value;
+            LineaDetalle.BaseImponible = document.getElementById("baseimponible").value;
+            LineaDetalle.ImpuestoNeto = document.getElementById("impuestoneto").value;
+            LineaDetalle.MontoTotalLinea = document.getElementById("montototallinea").value;
+            LineaDetalle.Consecutivo = document.getElementById("consecutivo").value;
+            LineaDetalle.MontoDescuento = document.getElementById("montodescuento").value;
+            LineaDetalle.NaturalezaDescuento = document.getElementById("naturalezadescuento").value;
+            LineaDetalle.CodigoComercialTipo = document.getElementById("codigocomercialtipo").value;
+            LineaDetalle.CodigoComercialCodigo = document.getElementById("codigocomercial").value;
+
+            modificarLineaDetalle(LineaDetalle, document.getElementById("espaciomostraravance"));
+
+        }
+
+        (function () {
+
+            document.getElementById("btnguardar").addEventListener("click", GuardarLineaDetalle);
+
+            document.getElementById("btneliminar").addEventListener("click", EliminarLineaDetalle);
+
+            document.getElementById("btnmodificar").addEventListener("click", ModificarLineaDetalle);
+
+            cargarLineaDetalle(document.getElementById("espaciomostraravance"));
+
+            document.getElementById("consecutivo").addEventListener("keypress", habilitarguardar);
+
+            cargarMontoDescuentoaSelect(document.getElementById("montodescuento"));
+
+            cargarNaturalezaDescuentoaSelect(document.getElementById("naturalezadescuento"));
+
+            cargarCodigoComercialaSelect(document.getElementById("codigocomercial"));
+
+            cargarTipoCodigoComercialaSelect(document.getElementById("codigocomercialtipo"));
+
+            cargarImpuestoParaSeleccionar(document.getElementById("espaciomostraravance"), "listadodeimpuestos");
+
+            cargarExoneracionParaSeleccionar(document.getElementById("espaciomostraravance"), "listadodeexoneraciones");
+
+        })();
+
+        function cargardatosenelformulario(objetoserializado) {
+
+            document.getElementById("consecutivo").value = objetoserializado.Consecutivo1;
+            document.getElementById("numerolinea").value = objetoserializado.NumeroLinea1;
+            document.getElementById("partidaarancelaria").value = objetoserializado.PartidaArancelaria1;
+            document.getElementById("codigo").value = objetoserializado.Codigo1;
+            document.getElementById("cantidad").value = objetoserializado.Cantidad1;
+            document.getElementById("unidadmedida").value = objetoserializado.UnidadMedida1;
+            document.getElementById("unidadmedidacomercial").value = objetoserializado.UnidadMedidaComercial1;
+            document.getElementById("detalle").value = objetoserializado.Detalle1;
+            document.getElementById("preciounitario").value = objetoserializado.PrecioUnitario1;
+            document.getElementById("montototal").value = objetoserializado.MontoTotal1;
+            document.getElementById("subtotal").value = objetoserializado.Subtotal1;
+            document.getElementById("baseimponible").value = objetoserializado.BaseImponible1;
+            document.getElementById("impuestoneto").value = objetoserializado.ImpuestoNeto1;
+            document.getElementById("montototallinea").value = objetoserializado.MontoTotalLinea1;
+            document.getElementById("montodescuento").value = objetoserializado.MontoDescuento1.MontoDescuento1;
+            document.getElementById("naturalezadescuento").value = objetoserializado.NaturalezaDescuento.NaturalezaDescuento;
+            document.getElementById("codigocomercialtipo").value = objetoserializado.CodigoComercialTipo1.Tipo1;
+            document.getElementById("codigocomercial").value = objetoserializado.CodigoComercialCodigo1.Codigo1;
+
+            document.getElementById("numerolinea").disabled = false;
+            document.getElementById("partidaarancelaria").disabled = false;
+            document.getElementById("codigo").disabled = false;
+            document.getElementById("cantidad").disabled = false;
+            document.getElementById("unidadmedida").disabled = false;
+            document.getElementById("unidadmedidacomercial").disabled = false;
+            document.getElementById("detalle").disabled = false;
+            document.getElementById("preciounitario").disabled = false;
+            document.getElementById("baseimponible").disabled = false;
+            document.getElementById("montodescuento").disabled = false;
+            document.getElementById("naturalezadescuento").disabled = false;
+            document.getElementById("codigocomercialtipo").disabled = false;
+            document.getElementById("codigocomercial").disabled = false;
+
+            deshabilitarguardar();
+        }
+
+        function verificareliminar(iddelobjeto1) {
+            var answer = window.confirm("Desea eliminar la línea detalle " + iddelobjeto1 + "?");
+            if (answer) {
+                LineaDetalle.Consecutivo = iddelobjeto1;
+
+                eliminarLineaDetalle(LineaDetalle, document.getElementById("espaciomostraravance"));
+                habilitarguardar();
+            }
+            else {
+                alert("No se realizó ningún cambio.");
+            }
+
+        }
+
+        function verificarexistencia(event) {
+            if (event.which == 13 || event.keyCode == 13) {
+                if (document.getElementById("consecutivo").value != "") {
+                    var idactual = document.getElementById("consecutivo").value;
+                    LineaDetalle.Consecutivo = idactual;
+                    verificarLineaDetalle(LineaDetalle, document.getElementById("espaciomostraravance"))
+                }
+            }
+        }
+
+        function rellenadatosexistentes(lineadetalleexistente) {
+
+            document.getElementById("numerolinea").value = lineadetalleexistente.NumeroLinea1;
+            document.getElementById("partidaarancelaria").value = lineadetalleexistente.PartidaArancelaria1;
+            document.getElementById("codigo").value = lineadetalleexistente.Codigo1;
+            document.getElementById("cantidad").value = lineadetalleexistente.Cantidad1;
+            document.getElementById("unidadmedida").value = lineadetalleexistente.UnidadMedida1;
+            document.getElementById("unidadmedidacomercial").value = lineadetalleexistente.UnidadMedidaComercial1;
+            document.getElementById("detalle").value = lineadetalleexistente.Detalle1;
+            document.getElementById("preciounitario").value = lineadetalleexistente.PrecioUnitario1;
+            document.getElementById("montototal").value = lineadetalleexistente.MontoTotal1;
+            document.getElementById("subtotal").value = lineadetalleexistente.Subtotal1;
+            document.getElementById("baseimponible").value = lineadetalleexistente.BaseImponible1;
+            document.getElementById("impuestoneto").value = lineadetalleexistente.ImpuestoNeto1;
+            document.getElementById("montototallinea").value = lineadetalleexistente.MontoTotalLinea1;
+            document.getElementById("montodescuento").value = lineadetalleexistente.MontoDescuento1.MontoDescuento1;
+            document.getElementById("naturalezadescuento").value = lineadetalleexistente.NaturalezaDescuento.NaturalezaDescuento;
+            document.getElementById("codigocomercialtipo").value = lineadetalleexistente.CodigoComercialTipo1.Tipo1;
+            document.getElementById("codigocomercial").value = lineadetalleexistente.CodigoComercialCodigo1.Codigo1;
+
+            document.getElementById("numerolinea").disabled = false;
+            document.getElementById("partidaarancelaria").disabled = false;
+            document.getElementById("codigo").disabled = false;
+            document.getElementById("cantidad").disabled = false;
+            document.getElementById("unidadmedida").disabled = false;
+            document.getElementById("unidadmedidacomercial").disabled = false;
+            document.getElementById("detalle").disabled = false;
+            document.getElementById("preciounitario").disabled = false;
+            document.getElementById("baseimponible").disabled = false;
+            document.getElementById("montodescuento").disabled = false;
+            document.getElementById("naturalezadescuento").disabled = false;
+            document.getElementById("codigocomercialtipo").disabled = false;
+            document.getElementById("codigocomercial").disabled = false;
+
+            deshabilitarguardar();
+
+        }
+
+        function limpiadatosparanuevo() {
+
+            document.getElementById("numerolinea").value = "";
+            document.getElementById("partidaarancelaria").value = "";
+            document.getElementById("codigo").value = "";
+            document.getElementById("cantidad").value = "";
+            document.getElementById("unidadmedida").value = "";
+            document.getElementById("unidadmedidacomercial").value = "";
+            document.getElementById("detalle").value = "";
+            document.getElementById("preciounitario").value = "";
+            document.getElementById("montototal").value = "";
+            document.getElementById("subtotal").value = "";
+            document.getElementById("baseimponible").value = "";
+            document.getElementById("montototallinea").value = "";
+            document.getElementById("montodescuento").value = "";
+            document.getElementById("naturalezadescuento").value = "";
+            document.getElementById("codigocomercialtipo").value = "";
+            document.getElementById("codigocomercial").value = "";
+
+            document.getElementById("numerolinea").disabled = false;
+            document.getElementById("partidaarancelaria").disabled = false;
+            document.getElementById("codigo").disabled = false;
+            document.getElementById("cantidad").disabled = false;
+            document.getElementById("unidadmedida").disabled = false;
+            document.getElementById("unidadmedidacomercial").disabled = false;
+            document.getElementById("detalle").disabled = false;
+            document.getElementById("preciounitario").disabled = false;
+            document.getElementById("baseimponible").disabled = false;
+            document.getElementById("montodescuento").disabled = false;
+            document.getElementById("naturalezadescuento").disabled = false;
+            document.getElementById("codigocomercialtipo").disabled = false;
+            document.getElementById("codigocomercial").disabled = false;
+
+            habilitarguardar();
+        }
+
+        function cambioCantidad(){
+            if (document.getElementById("cantidad").value == ""){
+                document.getElementById("cantidad").value = 0;
+            }
+            LineaDetalle.Cantidad = document.getElementById("cantidad").value;
+            automatizacionCalculos(document.getElementById("montototal"), document.getElementById("subtotal"), document.getElementById("impuestoneto"), document.getElementById("montototallinea"));
+        }
+        
+        function cambioPrecioUnitario(){
+            if (document.getElementById("preciounitario").value == ""){
+                document.getElementById("preciounitario").value = 0;
+            }
+            LineaDetalle.PrecioUnitario = document.getElementById("preciounitario").value;
+            automatizacionCalculos(document.getElementById("montototal"), document.getElementById("subtotal"), document.getElementById("impuestoneto"), document.getElementById("montototallinea"));
+        }
+
+        function cambioDescuento(){
+            if (document.getElementById("montodescuento").value == ""){
+                document.getElementById("montodescuento").value = 0;
+            }
+            LineaDetalle.MontoDescuento = document.getElementById("montodescuento").value;
+            automatizacionCalculos(document.getElementById("montototal"), document.getElementById("subtotal"), document.getElementById("impuestoneto"), document.getElementById("montototallinea"));
+        }
+    </script>
+
+</body>
+</html>

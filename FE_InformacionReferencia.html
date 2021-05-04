@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Información de Referencia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+
+    <div id="espaciomostraravance"></div>
+
+    <input type="checkbox" id="menu" />
+    <label for="menu" class="menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </label>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="FE_CodigoComercial.html">Códigos Comerciales</a></li>
+            <li><a href="FE_CodigoTipoMoneda.html">Códigos de Tipo de Moneda</a></li>
+            <li><a href="FE_Descuento.html">Descuento</a></li>
+            <li><a href="FE_DetalleServicio.html">Detalles de Servicio</a></li>
+            <li><a href="FE_Exoneracion.html">Exoneración</a></li>
+            <li><a href="FE_Factura.html">Factura</a></li>
+            <li><a href="FE_Identificacion.html">Identificación</a></li>
+            <li><a href="FE_Impuesto.html">Impuesto</a></li>
+            <li><a href="FE_InformacionReferencia.html">Información de Referencia</a></li>
+            <li><a href="FE_LineaDetalle.html">Línea Detalle</a></li>
+            <li><a href="FE_Otros.html">Otros</a></li>
+            <li><a href="FE_OtrosCargos.html">Otros Cargos</a></li>
+            <li><a href="FE_Persona.html">Persona</a></li>
+            <li><a href="FE_ResumenFactura.html">Resumen Factura</a></li>
+            <li><a href="FE_TelefonoFax.html">Teléfono y Fax</a></li>
+            <li><a href="FE_Ubicacion.html">Ubicación</a></li>
+        </ul>
+    </nav>
+    <!-- partial:index.partial.html -->
+    <div class="container">
+        <form>
+            <div class="row">
+                <h4>Gestión de Información de Referencia</h4>
+                <div class="input-group input-group-icon">
+                    <select id="clave"><option>Seleccione la Clave (Presione Enter para Verificar Existencia)</option></select>
+                    <input type="button" value="Nueva Clave" id="btnnuevaclave" style="width:220px; margin-left: 20px;" onclick="location.href='FE_Factura.html'" />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="button" value="Verificar Clave" id="btnverificarclave" onclick="verificarexistencia()" />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="tipodoc" placeholder="Tipo de Documento" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="numero" placeholder="Número" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="datetime" id="fechaemision" placeholder="Fecha de Emisión" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="codigo" placeholder="Código" disabled />
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" id="razon" placeholder="Razón" disabled />
+                </div>
+                <div class="input-group">
+                    <input type="button" value="Guardar" id="btnguardar" disabled />
+                    <br><br>
+                    <input type="button" value="Eliminar" id="btneliminar" disabled />
+                    <br><br>
+                    <input type="button" value="Modificar" id="btnmodificar" disabled />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="formulario">
+        <div class="table-title">
+            <h3>Informaciones de Referencia</h3>
+        </div>
+        <table class="table-fill" id="listado">
+        </table>
+    </div>
+    <br><br><br><br>
+    <!-- partial -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="./script.js"></script>
+
+    <script src="Javascript/jQuery.js"></script>
+    <script src="Javascript/Ajax.js"></script>
+    <script type="text/javascript">
+
+        function GuardarInformacionReferencia() {
+
+            Factura.Clave = document.getElementById("clave").value;
+
+            InformacionReferencia.TipoDoc = document.getElementById("tipodoc").value;
+            InformacionReferencia.Numero = document.getElementById("numero").value;
+            InformacionReferencia.FechaEmisionReferencia = document.getElementById("fechaemision").value;
+            InformacionReferencia.Codigo = document.getElementById("codigo").value;
+            InformacionReferencia.Razon = document.getElementById("razon").value;
+            InformacionReferencia.Clave = document.getElementById("clave").value;
+
+            guardarInformacionReferencia(Factura, InformacionReferencia, document.getElementById("espaciomostraravance"));
+
+        }
+
+        function EliminarInformacionReferencia() {
+
+            InformacionReferencia.Clave = document.getElementById("clave").value;
+
+            eliminarInformacionReferencia(InformacionReferencia, document.getElementById("espaciomostraravance"));
+
+        }
+
+        function ModificarInformacionReferencia() {
+
+            Factura.Clave = document.getElementById("clave").value;
+
+            InformacionReferencia.TipoDoc = document.getElementById("tipodoc").value;
+            InformacionReferencia.Numero = document.getElementById("numero").value;
+            InformacionReferencia.FechaEmisionReferencia = document.getElementById("fechaemision").value;
+            InformacionReferencia.Codigo = document.getElementById("codigo").value;
+            InformacionReferencia.Razon = document.getElementById("razon").value;
+            InformacionReferencia.Clave = document.getElementById("clave").value;
+
+            modificarInformacionReferencia(InformacionReferencia, document.getElementById("espaciomostraravance"));
+
+        }
+
+        (function () {
+
+            document.getElementById("btnguardar").addEventListener("click", GuardarInformacionReferencia);
+
+            document.getElementById("btneliminar").addEventListener("click", EliminarInformacionReferencia);
+
+            document.getElementById("btnmodificar").addEventListener("click", ModificarInformacionReferencia);
+
+            cargarInformacionReferencia(document.getElementById("espaciomostraravance"));
+
+            document.getElementById("clave").addEventListener("keypress", habilitarguardar);
+
+            cargarFacturaaSelect(document.getElementById("clave"));
+
+
+        })();
+
+        function cargardatosenelformulario(objetoserializado) {
+            document.getElementById("tipodoc").value = objetoserializado.TipoDoc1;
+            document.getElementById("numero").value = objetoserializado.Numero1;
+            document.getElementById("fechaemision").value = objetoserializado.FechaEmision1;
+            document.getElementById("codigo").value = objetoserializado.Codigo1;
+            document.getElementById("razon").value = objetoserializado.Razon1;
+            document.getElementById("clave").value = objetoserializado.Clave1.Clave1;
+
+            document.getElementById("tipodoc").disabled = false;
+            document.getElementById("numero").disabled = false;
+            document.getElementById("fechaemision").disabled = false;
+            document.getElementById("codigo").disabled = false;
+            document.getElementById("razon").disabled = false;
+            document.getElementById("btnnuevaclave").disabled = false;
+
+            deshabilitarguardar();
+        }
+
+        function verificareliminar(iddelobjeto1) {
+            var answer = window.confirm("Desea eliminar la información de referencia " + iddelobjeto1 + "?");
+            if (answer) {
+                InformacionReferencia.Clave = iddelobjeto1;
+
+                eliminarInformacionReferencia(InformacionReferencia, document.getElementById("espaciomostraravance"));
+                habilitarguardar();
+            }
+            else {
+                alert("No se realizó ningún cambio.");
+            }
+
+        }
+
+        function verificarexistencia() {
+            if (document.getElementById("clave").value != "") {
+                var idactual = document.getElementById("clave").value;
+                InformacionReferencia.Clave = idactual;
+                verificarInformacionReferencia(InformacionReferencia, document.getElementById("espaciomostraravance"))
+            }
+        }
+
+        function rellenadatosexistentes(informacionreferenciaexistente) {
+
+            document.getElementById("tipodoc").value = informacionreferenciaexistente.TipoDoc1;
+            document.getElementById("numero").value = informacionreferenciaexistente.Numero1;
+            document.getElementById("fechaemision").value = informacionreferenciaexistente.FechaEmision1;
+            document.getElementById("codigo").value = informacionreferenciaexistente.Codigo1;
+            document.getElementById("razon").value = informacionreferenciaexistente.Razon1;
+
+            document.getElementById("tipodoc").disabled = false;
+            document.getElementById("numero").disabled = false;
+            document.getElementById("fechaemision").disabled = false;
+            document.getElementById("codigo").disabled = false;
+            document.getElementById("razon").disabled = false;
+            document.getElementById("btnnuevaclave").disabled = false;
+
+            deshabilitarguardar();
+
+        }
+
+        function limpiadatosparanuevo() {
+
+            document.getElementById("tipodoc").value = "";
+            document.getElementById("numero").value = "";
+            document.getElementById("fechaemision").value = "";
+            document.getElementById("codigo").value = "";
+            document.getElementById("razon").value = "";
+
+            document.getElementById("tipodoc").disabled = false;
+            document.getElementById("numero").disabled = false;
+            document.getElementById("fechaemision").disabled = false;
+            document.getElementById("codigo").disabled = false;
+            document.getElementById("razon").disabled = false;
+            document.getElementById("btnnuevaclave").disabled = false;
+
+            habilitarguardar();
+        }
+
+    </script>
+
+</body>
+</html>
